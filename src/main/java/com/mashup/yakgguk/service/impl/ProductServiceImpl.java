@@ -1,8 +1,18 @@
 package com.mashup.yakgguk.service.impl;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.mashup.yakgguk.entity.Product;
@@ -16,22 +26,18 @@ public class ProductServiceImpl implements ProductService {
 	private ProductRepository productRepository;
 	
 	@Override
-	public List<Product> list(List<String> productNames) {
-		
-
-		return null;
+	public void add(Product product) {
+		productRepository.save(product);
 	}
 	
-	private Product searchProduct(String ProductName) { 
-//		productRepository.
-		
-		return null;
+	@Override
+	public Product getById(int id) {
+		return productRepository.findById(id).orElse(null);
 	}
 
 	@Override
-	public List<Product> parseByName(int barcodeNumber, String name) {
-		// TODO Auto-generated method stub
-		return null;
+	public Product getByName(String name) {
+		return productRepository.findByName(name);
 	}
 
 }

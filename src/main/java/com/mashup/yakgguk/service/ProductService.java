@@ -6,8 +6,10 @@ import com.mashup.yakgguk.entity.Product;
 
 public interface ProductService {
 	
-	List<Product> list(List<String> productNames);
+	void add(Product product);
 	
-	List<Product> parseByName(int barcodeNumber, String name);
+	Product getById(int id);
+	
+	Product getByName(String name);
 
 }
