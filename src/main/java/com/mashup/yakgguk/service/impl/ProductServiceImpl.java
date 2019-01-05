@@ -95,9 +95,12 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	private List<ProductLite> sortList(List<ProductLite> list, String name) {
+		list.sort(Comparator.comparing(ProductLite::getName));
+
 		List<ProductLite> startNameList = list.stream().filter(l -> l.getName().startsWith(name))
 				.collect(Collectors.toList());
 
+		// 입력받은 name으로 시작하는 product들을 list앞부분에 위치시키기
 		list.removeAll(startNameList);
 		startNameList.addAll(list);
 
