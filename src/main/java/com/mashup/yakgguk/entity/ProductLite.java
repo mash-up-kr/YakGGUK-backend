@@ -8,11 +8,13 @@ import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@ToString
 @Table(name = "product")
 public class ProductLite {
 
@@ -21,10 +23,5 @@ public class ProductLite {
 	private int productId;
 	private String name;
 	private String company;
-	
-	@Override
-	public String toString() {
-		return "ProductLite [productId=" + productId + ", name=" + name + ", company=" + company + "]";
-	}
 	
 }

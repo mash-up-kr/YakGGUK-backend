@@ -1,17 +1,9 @@
 package com.mashup.yakgguk.service.impl;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -48,40 +40,6 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public Product getByName(String name) {
-		return productRepository.findByName(name);
-	}
-
-	public List<Product> searchProducts(String productName) {
-		String keyword = encodeName(productName);
-		List<Product> products = new ArrayList<>();
-		try {
-			Document doc = Jsoup.connect(url + keyword).get();
-			Elements items = doc.select("items").select("item");
-
-			LocalDateTime date = LocalDateTime.now();
-			products = items.stream().map(i -> Product.makeByElement(i, date)).collect(Collectors.toList());
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		productRepository.saveAll(products);
-
-		return products;
-	}
-
-	private String encodeName(String name) {
-		try {
-			name = URLEncoder.encode(name, "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-
-		return name;
-	}
-
-	@Override
 	public ProductLiteDto nameListByNameAndCompany(String name, String company, int pageNo) {
 		List<ProductLite> list = productLiteRepository.findByNameContainingAndCompanyContaining(name, company);
 
@@ -100,7 +58,7 @@ public class ProductServiceImpl implements ProductService {
 		List<ProductLite> startNameList = list.stream().filter(l -> l.getName().startsWith(name))
 				.collect(Collectors.toList());
 
-		// ÀÔ·Â¹ŞÀº nameÀ¸·Î ½ÃÀÛÇÏ´Â productµéÀ» list¾ÕºÎºĞ¿¡ À§Ä¡½ÃÅ°±â
+		// ì…ë ¥ë°›ì€ nameìœ¼ë¡œ ì‹œì‘í•˜ëŠ” productë“¤ì„ listì•ë¶€ë¶„ì— ìœ„ì¹˜ì‹œí‚¤ê¸°
 		list.removeAll(startNameList);
 		startNameList.addAll(list);
 
