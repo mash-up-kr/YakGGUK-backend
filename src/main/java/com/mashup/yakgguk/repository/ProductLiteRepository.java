@@ -8,8 +8,6 @@ import com.mashup.yakgguk.entity.ProductLite;
 
 public interface ProductLiteRepository extends JpaRepository<ProductLite, Integer> {
 
-	List<ProductLite> findByNameContaining(String name);
-
 	List<ProductLite> findByNameContainingAndCompanyContaining(String name, String company);
 
 }

@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import org.jsoup.nodes.Element;
@@ -15,20 +16,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Entity
 public class Product {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private int productId;
 
 	private String name;
-
-	private int barcodeNumber;
 
 	private String appearance;
 
@@ -45,9 +42,24 @@ public class Product {
 
 	private String company;
 
+	private String manageNo;
+
 	private LocalDateTime crtDate;
 
 	private LocalDateTime updDate;
+
+	public Product(String name, String appearance, String intake, String expirationDate,
+			String precautions, String content, String company, String manageNo) {
+		super();
+		this.name = name;
+		this.appearance = appearance;
+		this.intake = intake;
+		this.expirationDate = expirationDate;
+		this.precautions = precautions;
+		this.content = content;
+		this.company = company;
+		this.manageNo = manageNo;
+	}
 
 	public static Product makeByElement(Element item, LocalDateTime dateTime) {
 		String name = item.select("prdlst_nm").text();
@@ -57,12 +69,9 @@ public class Product {
 		String precautions = item.select("iftkn_atnt_matr_cn").text();
 		String content = item.select("primary_fnclty").text();
 		String company = item.select("bssh_nm").text();
+		String manageNo = item.select("gu_prdlst_mnf_manage_no").text();
 
-		Product product = Product.builder().name(name).appearance(appearance).intake(intake)
-				.expirationDate(expirationDate).precautions(precautions).content(content).company(company)
-				.crtDate(dateTime).updDate(dateTime).build();
-
-		return product;
+		return new Product(name, appearance, intake, expirationDate, precautions, content, company, manageNo);
 	}
 
 }
