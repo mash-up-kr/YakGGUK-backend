@@ -25,7 +25,7 @@ public class SwaggerConfiguration {
 //                .groupName("com.mashup.kr.")
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.any())
+                .apis(RequestHandlerSelectors.basePackage("com.mashup.yakgguk.controller"))
                 .paths(PathSelectors.ant("/**"))
                 .build()
                 .useDefaultResponseMessages(false)
@@ -42,7 +42,7 @@ public class SwaggerConfiguration {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("Yakgguk")
-                .description("2018 하반기 Mash-Up 해커톤 프로젝트")
+                .description("2018 하반기 Mash-Up 프로젝트")
 //                .contact(new Contact("KiWooyoung", "https://github.com/mashup", "ueong777@gmail.com"))
                 .license("Apache License Version 2.0")
                 .licenseUrl("https://www.apache.org/licenses/LICENSE-2.0")
