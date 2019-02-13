@@ -19,7 +19,7 @@ import lombok.ToString;
 public class ProductLite {
 
 	@Id
-	@Column(name = "id")
+	@Column(name = "product_id")
 	private int productId;
 	private String name;
 	private String company;

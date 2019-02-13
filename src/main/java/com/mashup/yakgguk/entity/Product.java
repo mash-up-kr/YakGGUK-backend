@@ -10,8 +10,6 @@ import javax.persistence.Id;
 
 import org.jsoup.nodes.Element;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -22,7 +20,7 @@ public class Product {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
+	@Column(name = "product_id")
 	private int productId;
 
 	private String name;
