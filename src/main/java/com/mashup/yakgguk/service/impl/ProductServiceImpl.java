@@ -24,15 +24,7 @@ public class ProductServiceImpl implements ProductService {
 	@Autowired
 	private ProductLiteRepository productLiteRepository;
 
-	@Value("${url}")
-	private String url;
-
 	private static final int ONE_PAGE_SIZE = 10;
-
-	@Override
-	public void add(Product product) {
-		productRepository.save(product);
-	}
 
 	@Override
 	public Product getById(int id) {
