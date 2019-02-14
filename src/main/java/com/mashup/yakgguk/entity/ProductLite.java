@@ -23,5 +23,9 @@ public class ProductLite {
 	private int productId;
 	private String name;
 	private String company;
-	
+
+	public static ProductLite toProductLite(Product product) {
+		return new ProductLite(product.getProductId(), product.getName(), product.getCompany());
+	}
+
 }

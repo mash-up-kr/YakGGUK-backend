@@ -1,0 +1,23 @@
+package com.mashup.yakgguk.service;
+
+import com.mashup.yakgguk.dto.ProductBarcodeDto;
+
+public interface BarcodeService {
+	
+	/**
+	 * barcodeNumber를 받아서 적절한 Product를 반환
+	 * 
+	 * @param barcodeNumber
+	 * @return 
+	 */
+	ProductBarcodeDto getProductByBarcodeNumber(String barcodeNumber);
+	
+	/**
+	 * 사용자가 입력한 Barcode와 선택한 Product를 저장
+	 * 
+	 * @param productId
+	 * @param barcodeNumber
+	 */
+	void addBarcode(String barcodeNumber, int productId);
+
+}

@@ -12,12 +12,16 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
+@Builder
 public class ProductBarcode {
 	
 	@Id
@@ -34,7 +38,7 @@ public class ProductBarcode {
 	private Barcode barcode;
 	
 	@Enumerated(EnumType.STRING)
-	private BarcodeType type;
+	private BarcodeType barcodeType;
 	
 	private int cnt;
 	private LocalDateTime crtDate;
