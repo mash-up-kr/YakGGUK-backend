@@ -2,6 +2,7 @@ package com.mashup.yakgguk.service.impl;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,7 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public ProductLiteDto nameListByNameAndCompany(String name, String company, int pageNo) {
+		company = Optional.ofNullable(company).orElse("");
 		List<ProductLite> list = productLiteRepository.findByNameContainingAndCompanyContaining(name, company);
 
 		int totalPage = getTotalPage(list.size(), ONE_PAGE_SIZE);
