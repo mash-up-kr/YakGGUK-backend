@@ -15,6 +15,7 @@ import com.mashup.yakgguk.entity.ProductBarcode;
 import com.mashup.yakgguk.entity.ProductBarcode.BarcodeType;
 import com.mashup.yakgguk.exception.NotEnoughProductBarcodeException;
 import com.mashup.yakgguk.exception.NotFoundBarcodeException;
+import com.mashup.yakgguk.exception.NotFoundProductException;
 import com.mashup.yakgguk.repository.BarcodeRepository;
 import com.mashup.yakgguk.repository.ProductBarcodeRepository;
 import com.mashup.yakgguk.repository.ProductRepository;
@@ -61,7 +62,35 @@ public class BarcodeServiceImpl implements BarcodeService {
 	}
 
 	@Override
+	@Transactional
 	public void addBarcode(String barcodeNumber, int productId) {
+		Barcode barcode = barcodeRepository.findByBarcodeNumber(barcodeNumber).orElse(null);
+
+		LocalDateTime dateTime = LocalDateTime.now();
+		if (barcode == null) {
+			barcode = new Barcode();
+			barcode.setBarcodeNumber(barcodeNumber);;
+			barcode.setCrtDate(dateTime);
+			barcode.setUpdDate(dateTime);
+
+			barcodeRepository.save(barcode);
+		}
+
+		List<ProductBarcode> pbs = barcode.getProductBarcode();
+		ProductBarcode productBarcode = pbs.stream().filter(pb -> pb.getProduct().getProductId() == productId).findAny()
+				.orElse(null);
+
+		if (productBarcode == null) {
+			Product product = productRepository.findById(productId).orElseThrow(NotFoundProductException::new);
+
+			productBarcode = ProductBarcode.builder().product(product).barcode(barcode).cnt(1)
+					.barcodeType(BarcodeType.USER).crtDate(dateTime).updDate(dateTime).build();
+		} else {
+			int curCnt = productBarcode.getCnt();
+			productBarcode.setCnt(curCnt + 1);
+			productBarcode.setUpdDate(dateTime);
+		}
+		productBarcodeRepository.save(productBarcode);
 	}
 
 }

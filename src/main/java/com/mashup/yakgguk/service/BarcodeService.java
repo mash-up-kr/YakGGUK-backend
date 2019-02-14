@@ -15,8 +15,8 @@ public interface BarcodeService {
 	/**
 	 * 사용자가 입력한 Barcode와 선택한 Product를 저장
 	 * 
-	 * @param productId
 	 * @param barcodeNumber
+	 * @param productId
 	 */
 	void addBarcode(String barcodeNumber, int productId);
 
