@@ -36,7 +36,7 @@ public class ProductController {
 		return productService.nameListByNameAndCompany(name, company, pageNo);
 	}
 
-	@ApiOperation(value = "약 정보 상세 조회(미완성)", notes = "약 정보 상세를 조회한다.")
+	@ApiOperation(value = "약 정보 상세 조회", notes = "약 정보 상세를 조회한다.")
 	@GetMapping(value = "{id}")
 	public Product getProductById(@PathVariable int id) {
 		return productService.getById(id);

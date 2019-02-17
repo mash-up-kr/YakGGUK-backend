@@ -2,18 +2,16 @@ package com.mashup.yakgguk.service.impl;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.List;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mashup.yakgguk.dto.ProductBarcodeDto;
 import com.mashup.yakgguk.entity.Barcode;
+import com.mashup.yakgguk.entity.Product;
 import com.mashup.yakgguk.entity.ProductBarcode;
 import com.mashup.yakgguk.entity.ProductBarcode.BarcodeType;
 import com.mashup.yakgguk.exception.NotEnoughProductBarcodeException;
@@ -44,21 +42,9 @@ public class BarcodeServiceImplTest {
 	@Test
 	public void test_getProductByBarcodeNumber() {
 		String barcodeNumber = "111111";
-		ProductBarcodeDto pbd = barcodeService.getProductByBarcodeNumber(barcodeNumber);
+		Product product = barcodeService.getProductByBarcodeNumber(barcodeNumber);
 
-		assertEquals(BarcodeType.OFFICIAL, pbd.getBarcodeType());
-		assertEquals(1, pbd.getCnt());
-		assertEquals("test product", pbd.getProductLite().getName());
-	}
-
-	@Test
-	public void test_getProductByBarcodeNumber2() {
-		String barcodeNumber = "333333";
-		ProductBarcodeDto pbd = barcodeService.getProductByBarcodeNumber(barcodeNumber);
-
-		assertEquals(BarcodeType.USER, pbd.getBarcodeType());
-		assertEquals(11, pbd.getCnt());
-		assertEquals("test product", pbd.getProductLite().getName());
+		assertEquals("test product", product.getName());
 	}
 
 	@Test(expected = NotFoundBarcodeException.class)

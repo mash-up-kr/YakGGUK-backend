@@ -37,7 +37,7 @@ public class BarcodeServiceImpl implements BarcodeService {
 
 	@Override
 	@Transactional
-	public ProductBarcodeDto getProductByBarcodeNumber(String barcodeNumber) {
+	public Product getProductByBarcodeNumber(String barcodeNumber) {
 		Barcode barcode = barcodeRepository.findByBarcodeNumber(barcodeNumber)
 				.orElseThrow(NotFoundBarcodeException::new);
 
@@ -47,8 +47,7 @@ public class BarcodeServiceImpl implements BarcodeService {
 
 		// OFFICIAL타입의 Product가 있으면 반환
 		if (productBarcode != null) {
-			Product product = productBarcode.getProduct();
-			return ProductBarcodeDto.toProductBarcodeDto(product, productBarcode);
+			return productBarcode.getProduct();
 		}
 
 		productBarcode = pbs.stream().max(Comparator.comparing(ProductBarcode::getCnt)).orElse(null);
@@ -57,8 +56,7 @@ public class BarcodeServiceImpl implements BarcodeService {
 		if (productBarcode.getCnt() < USER_TYPE_MIN_CNT)
 			throw new NotEnoughProductBarcodeException();
 
-		Product product = productBarcode.getProduct();
-		return ProductBarcodeDto.toProductBarcodeDto(product, productBarcode);
+		return productBarcode.getProduct();
 	}
 
 	@Override
